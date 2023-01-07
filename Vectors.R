@@ -55,3 +55,12 @@ names(v)<-c("a","b","c","d")
 
 v[2:4]
 v[c("c","a","d")]
+
+my.filter<-v>=2
+v[my.filter]
+v[v>=3]
+
+#Documentación de ayuda
+help("vector")
+??vector
+help.search("vector")
