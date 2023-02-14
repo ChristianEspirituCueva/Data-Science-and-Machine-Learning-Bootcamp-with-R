@@ -218,3 +218,139 @@ summary(model)
 #http://www.sthda.com/english/articles/40-regression-analysis/167-simple-linear-regression-in-r/#:~:text=The%20mathematical%20formula%20of%20the,slope%20of%20the%20regression%20line.
 #https://blog.minitab.com/es/analisis-de-regresion-como-puedo-interpretar-el-r-cuadrado-y-evaluar-la-bondad-de-ajuste#:~:text=El%20R%2Dcuadrado%20es%20una,se%20trata%20de%20regresi%C3%B3n%20m%C3%BAltiple.
 #https://es.wikipedia.org/wiki/Varianza
+
+
+plot(model)
+#Covarianza:
+#Es un valor que nos permite determinar si existe una relación 
+#entre dos variables. En el caso de que la covarianza sea positiva
+#significa que hay una relación directa. En el caso de que la 
+#covarianza sea negativa significa que hay una relación indirecta.
+#En el caso de que la covarianza de un valor entorno a cero significa
+#que no hay una relación. Este valor no es tan preciso se recomienda 
+#el coeficiente de correlación de Pearson.
+
+#Coeficiente de correlación de Pearson
+#Este valor nos permite determinar con más precisión si existe una
+#relación entre dos variables. Este valor resulta de la división 
+#entre la covarianza(númerador) y la multiplicación de la desviación
+#estandar de la variable independiente y dependiente(denominador).
+#Este valor se encuentra entre -1 y 1:
+#r es próxima a 1 es coeficiente de corelación directa fuerte.
+#r es próxima a -1 es coeficiente de corelación indirecta.
+#r es igual a 1 ó -1 es coeficiente de corelación funcional, o sea que
+#                       las variables dependiente e independiente se 
+#                       basan en una formula matematica que dan una 
+#                       predicción exacta.
+#r es próximo a 0, no existe una correlación lineal (no forma una linea),
+#                 puede que los puntos esten dispersos, puede que tengan 
+#                 una correlación cuadratica, logaritmica, etc.
+
+#Fitted Value:
+#Este es valor de respuesta de nuestra predicción apartir de la evaluación
+#hecha por las variables predictoras.
+
+#Residuo:
+#Este es el valor que resulta de la resta del valor real menos el valor 
+#predecido.
+
+#Residuals vs Fitted
+#El mejor resultado que se puede tener es que los puntos dibujen una linea
+#cercana a la linea media de los residuos (cero), ya que de esta manera 
+# nos decir que los valores predecidos están cerca de los valores reales.
+
+#Cuantiles Teoricos: 
+#Son los valores que se esperarían si una variable sigue una distribución 
+#de probabilidad teorica determinado(forma en que se espera que ocurran los 
+#eventos aleatorios), la más comunmente utilizada es una distribución normal.
+
+#Q-Q Normal:
+#Se utiliza en regresión lineal para evaluar si los errores de la regresión
+#siguen una distribución normal. Donde se comparan los cuantiles de los residuos
+#de la regresión con los cuantiles teóricos de una distribución normal.
+#Se espera que los puntos en la grafica estén lo más alineados a la linea 
+#diagonal para decir que los residuos se distribuyen normalmente, pues si hay 
+#desviaciones significativas de esa linea, se dice que los residuos no sigue una 
+#distribución normal. 
+
+
+
+#La homocedasticidad 
+#Se refiere a la propiedad de que la variabilidad de los errores de la regresión
+#es constante en todo el rango de valores de la variable independiente. Esto 
+#significa que los errores tienen la misma magnitud de variación y distribución 
+#en todos los niveles de la variable independiente.
+
+#La heterocedasticidad 
+#Se refiere a la propiedad de que la variabilidad de los errores de la regresión
+#no es constante en todo el rango de valores de la variable independiente. Esto 
+#significa que los errores pueden tener una magnitud de variación y distribución 
+#diferente en diferentes niveles de la variable independiente.
+
+#En la práctica, la homocedasticidad es deseable porque indica que la relación 
+#entre las variables es estable y se mantiene constante en todo el rango de valores 
+#de la variable independiente. La heterocedasticidad, por otro lado, puede indicar 
+#que la relación entre las variables cambia a medida que la variable independiente 
+#cambia y puede dar lugar a estimaciones sesgadas o poco precisas de los parámetros 
+#de la regresión lineal.
+
+#En resumen, la homocedasticidad se refiere a una variabilidad constante de los errores de la regresión, mientras que la heterocedasticidad se refiere a una variabilidad no constante de los errores de la regresión. La homocedasticidad es deseable en la regresión lineal porque indica una relación estable y confiable entre las variables.
+
+
+
+#Scale Location:
+#Es una herramienta utilizada para evaluar si la variabilidad de los residuos 
+#es constante en todo el rango de valores ajustados (eje x). 
+#En esta gráfica, los residuos estandarizados (residuos divididos por su 
+#desviación estándar) se grafican en el eje vertical y la raíz cuadrada del 
+#valor absoluto de los residuos estandarizados se grafica en el eje horizontal.
+#Si la varianza de los residuos es constante en todo el rango de valores ajustados, 
+#los puntos en la gráfica deberían distribuirse aleatoriamente alrededor de una 
+#línea horizontal, lo que indica una homocedasticidad de los residuos. 
+#Si los puntos en la gráfica se agrupan en algún patrón o siguen una forma de 
+#embudo, esto indica una heterocedasticidad, lo que sugiere que la variabilidad 
+#de los residuos no es constante en todo el rango de valores ajustados.
+
+#Bilbiografía:
+#https://www.varsitytutors.com/hotmath/hotmath_help/spanish/topics/joint-variation
+#https://www.youtube.com/watch?v=eTuGHN53kJQ
+#https://www.youtube.com/watch?v=XW-yuLXX4PY
+#https://es.wikipedia.org/wiki/Covarianza
+#https://www.youtube.com/watch?v=XW-yuLXX4PY
+
+
+#Predicción
+G3.prediccion <- predict(model,test)
+#Almacenamos los valores predichos obtenidos
+#de los datos de test y los datos originales 
+#de test
+results <- cbind(G3.prediccion,test$G3)
+
+colnames(results)<-c("predecido","actual")
+results <- as.data.frame(results)
+results
+
+#Convertimos nuestras predicciones 
+#de negativo a cero
+to_zero <- function(x){
+  if(x<0){
+    return (0)
+  }else{
+    return(x)
+  }
+}
+
+results$predecido<-sapply(results$predecido, to_zero)
+
+#Mean Squeared error - error medio cuadrado
+mse<-mean((results$actual - results$predecido)^2)
+mse
+#Root mean Squeared error - Raíz del Error Cuadrático Medio
+rmse<-(mse^0.5)
+rmse
+#Sum Squared Error - suma de cuadrados de estimación de errores
+sse <- sum((results$predecido - results$actual)^2)
+sst <- sum((mean(df$G3) - results$actual)^2)
+
+R2<-1- sse/sst
+R2
